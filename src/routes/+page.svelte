@@ -5,6 +5,7 @@
   let competitions = [];
 
   onMount(async () => {
+    // This logic is unchanged
     competitions = await pb.collection('competitions').getFullList({
       sort: '-created',
     });
@@ -18,7 +19,9 @@
     {#each competitions as competition}
       <a href={`/competitions/${competition.id}`} class="competition-item">
         <h3>{competition.name}</h3>
-        <p>Picks locked on: {new Date(competition.prediction_deadline).toLocaleString()}</p>
+        {#if competition.group_stage_deadline}
+          <p>Picks locked on: {new Date(competition.group_stage_deadline).toLocaleString()}</p>
+        {/if}
       </a>
     {/each}
   </div>
